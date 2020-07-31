@@ -10,10 +10,5 @@ namespace Payment.Model
         public int bal_amount { get; set; }
 
         public string Message { get; set; }
-
-        internal dynamic ToList()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

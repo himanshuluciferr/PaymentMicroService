@@ -21,7 +21,7 @@ namespace Payment.Controllers
 
             bal_amount = bal_amount - processing_charge;
 
-            return payment.ToList();
+            return payment;
 
 
         }
