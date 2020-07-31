@@ -22,7 +22,7 @@ namespace Payment.Controllers
             _log4net.Info("Payment initiated");
 
             PaymentDetails payment = new PaymentDetails();
-
+            
             int bal_amount = card_limit;
 
             bal_amount = bal_amount - processing_charge;
@@ -35,6 +35,8 @@ namespace Payment.Controllers
             {
                 payment.Message = "Failed";
             }
+
+            payment.CardDetails = new CardDetails() { Card_No = card_no, Card_Limit =bal_amount  };
 
 
             return payment;
