@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Payment.Models;
 using Microsoft.Extensions.Logging;
+using System.Configuration;
+using System.Net.Http.Headers;
 
 namespace Payment.Controllers
 
@@ -15,37 +17,55 @@ namespace Payment.Controllers
     {
         static readonly log4net.ILog _log4net = log4net.LogManager.GetLogger(typeof(PaymentController));
 
+        List<CardDetails> CardDetails = new List<CardDetails>()
+        {
+            new CardDetails{CardNumber=1099,CardLimit=20000},
+            new CardDetails{CardNumber=1089,CardLimit=30000},
+            new CardDetails{CardNumber=1011,CardLimit=10000},
+            new CardDetails{CardNumber=1032,CardLimit=5000}
+        };
+
         [HttpGet]
-        public dynamic GetProcessPayment(int card_no, int card_limit, int processing_charge)
+        public dynamic GetProcessPayment(int CardNo, int ProcessingCharge)
         {
 
             _log4net.Info("Payment initiated");
-           // card_limit = 20000;
-           // processing_charge = 500;
-
+           
+            
             PaymentDetails payment = new PaymentDetails();
-            
-            int bal_amount = card_limit;                    
-
-            bal_amount = bal_amount - processing_charge;    // processing_charge received from component processing microservice
-            
-            payment.BalAmount = bal_amount;                // balance amount updated
-
-            if( bal_amount>= 0)
+            int CardLimit = 0;
+            var CardLim = CardDetails.Where(Card => Card.CardNumber == CardNo);
+            var Limit = CardLim.Select(Limit => Limit.CardLimit);
+            foreach(int limit in Limit)
             {
+                CardLimit += limit;
+            }
+            payment.BalanceAmount = CardLimit;
+
+            if (payment.BalanceAmount >= ProcessingCharge)
+            {
+                payment.BalanceAmount -= ProcessingCharge;
                 payment.Message = "Successful";
+                CardDetails.Select(c => 
+                { 
+                    c.CardLimit = payment.BalanceAmount; return c;
+                });
+
             }
             else
             {
-                payment.Message = "Failed";
-            }                                              // message generated
+                payment.Message = "Failed";      // message generated
 
-            payment.CardDetails = new CardDetails() { Card_No = card_no, Card_Limit =bal_amount  };         // card details updated
+            }                                             
 
 
-            return payment;                               // returns bal amount, message with their card details
+            payment.CardDetails = new CardDetails() { CardNumber =CardNo, CardLimit=payment.BalanceAmount};    // card details updated
             
 
+            return payment.Message;             // returns bal amount, message with their card details
+            
         }
+
+
     }
 }

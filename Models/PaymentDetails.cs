@@ -8,7 +8,7 @@ namespace Payment.Models
 {
     public class PaymentDetails
     {
-        public int BalAmount { get; set; }
+        public int BalanceAmount { get; set; }
 
         public string Message { get; set; }
 
