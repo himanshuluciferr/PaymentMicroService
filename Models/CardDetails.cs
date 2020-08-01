@@ -7,8 +7,9 @@ namespace Payment.Models
 {
     public class CardDetails
     {
-        public long CardNumber{ get; set; }
-        public int CardLimit { get; set; }
+        public long CreditCardNumber{ get; set; }
+        public int CreditLimit { get; set; }
+        public int ProcessingCharge { get; set; }
 
     }
 }

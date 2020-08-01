@@ -8,10 +8,9 @@ namespace Payment.Models
 {
     public class PaymentDetails
     {
-        public int BalanceAmount { get; set; }
+        public int CurrentBalance { get; set; }
 
         public string Message { get; set; }
 
-        public CardDetails CardDetails { get; set;}
     }
 }
