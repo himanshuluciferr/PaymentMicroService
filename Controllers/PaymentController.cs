@@ -20,12 +20,16 @@ namespace Payment.Controllers
         {
 
             _log4net.Info("Payment initiated");
+           // card_limit = 20000;
+           // processing_charge = 500;
 
             PaymentDetails payment = new PaymentDetails();
             
-            int bal_amount = card_limit;
+            int bal_amount = card_limit;                    
 
-            bal_amount = bal_amount - processing_charge;
+            bal_amount = bal_amount - processing_charge;    // processing_charge received from component processing microservice
+            
+            payment.BalAmount = bal_amount;                // balance amount updated
 
             if( bal_amount>= 0)
             {
@@ -34,13 +38,13 @@ namespace Payment.Controllers
             else
             {
                 payment.Message = "Failed";
-            }
+            }                                              // message generated
 
-            payment.CardDetails = new CardDetails() { Card_No = card_no, Card_Limit =bal_amount  };
+            payment.CardDetails = new CardDetails() { Card_No = card_no, Card_Limit =bal_amount  };         // card details updated
 
 
-            return payment;
-
+            return payment;                               // returns bal amount, message with their card details
+            
 
         }
     }
