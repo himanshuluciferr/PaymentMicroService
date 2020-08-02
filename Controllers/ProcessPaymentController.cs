@@ -77,5 +77,16 @@ namespace Payment.Controllers
             }
             return payment;   // returns message & balance amount
         }
+
+
+        [HttpPost]
+        public CardDetails ProcessPayment(CardDetails details)
+        {
+            var CreditCardNumber = details.CreditCardNumber;
+            var CreditLimit = details.CreditLimit;
+            var ProcessingCharge = details.ProcessingCharge;
+
+            return details;
+        }
     }
 }
