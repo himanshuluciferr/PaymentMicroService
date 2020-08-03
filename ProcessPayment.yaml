@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: Payment
+  template:
+    metadata:
+      labels:
+        app: Payment
+    spec:
+      containers:
+      - name: payment
+        image:  payment.azurecr.io/payment:latest
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+      - name: paymentsn
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: Payment
