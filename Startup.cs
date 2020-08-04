@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Runtime.Intrinsics;
 using Microsoft.OpenApi.Models;
-
+using Payment.Repository;
 
 namespace Payment
 {
@@ -29,6 +29,7 @@ namespace Payment
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<IPayment, Repository.Payment>();
 
             services.AddSwaggerGen(c =>
             {
