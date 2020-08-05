@@ -35,9 +35,6 @@ namespace Payment.Controllers
 
         }
 
-
-       
-
         [HttpPost]
         public dynamic ProcessPayment(CardDetails det)
         {
