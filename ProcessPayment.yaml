@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: payment-deployment
+  name: payment
 spec:
   replicas: 1
   selector:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: payment
-        image:  payment.azurecr.io/paymentrepos:latest
+        image:  returnorderrn.azurecr.io/paymentrepos:latest
         ports:
         - containerPort: 8080
       imagePullSecrets:
