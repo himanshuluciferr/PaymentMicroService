@@ -17,7 +17,7 @@ namespace Payment.Repository
             PaymentDetails payment = new PaymentDetails();
             payment.CurrentBalance = det.CreditLimit;               //current balance initiated
             int Count = 0;
-            using (var reader = new StreamReader("./bin/Debug/netcoreapp3.1/TransactionRecord.csv"))       //csv file read
+            using (var reader = new StreamReader("TransactionRecord.csv"))       //csv file read
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 var count = csv.GetRecords<TransactionRecords>().Where(x => x.CreditCardNumber == det.CreditCardNumber).Select(x => x.Count);
@@ -47,7 +47,7 @@ namespace Payment.Repository
                 {
                     new TransactionRecords { CreditCardNumber = det.CreditCardNumber, CreditLimit = payment.CurrentBalance, Count = 1 }
                 };
-                using (var writer = new StreamWriter("./bin/Debug/netcoreapp3.1/TransactionRecord.csv"))
+                using (var writer = new StreamWriter("TransactionRecord.csv"))
                 using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                 {
                     csv.WriteRecords(records);                   //csv file written
