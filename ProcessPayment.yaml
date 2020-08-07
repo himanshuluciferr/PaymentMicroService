@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: payment
-        image:  portalrn.azurecr.io/paymentrepos:latest
+        image:  returnorder.azurecr.io/payment:latest
         ports:
         - containerPort: 8080
       imagePullSecrets:
